@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}It's a Match! — DateOut{% endblock %}
+{% block content %}
+<div class="match-page">
+  <div class="match-fireworks">🎉</div>
+  <h1 class="match-title">It's a Match!</h1>
+  <p class="match-sub">{{ man.name }} funded {{ woman.name }}'s date. Time to make it happen.</p>
+
+  <div class="match-profiles">
+    <div class="match-profile-card">
+      {% if woman.photos %}
+      <img src="{{ woman.photos[0] }}" class="match-profile-photo" alt="{{ woman.name }}"/>
+      {% endif %}
+      <div class="match-profile-name">{{ woman.name }}, {{ woman.age }}</div>
+      <div class="match-profile-role muted">Posted the date</div>
+      <p class="match-profile-bio">{{ woman.bio }}</p>
+    </div>
+
+    <div class="match-heart">💘</div>
+
+    <div class="match-profile-card">
+      {% if man.photos %}
+      <img src="{{ man.photos[0] }}" class="match-profile-photo" alt="{{ man.name }}"/>
+      {% endif %}
+      <div class="match-profile-name">{{ man.name }}, {{ man.age }}</div>
+      <div class="match-profile-role muted">Funded the date</div>
+      <p class="match-profile-bio">{{ man.bio }}</p>
+      {% if man.interests %}
+      <div class="interest-display" style="margin-top:.75rem;justify-content:center">
+        {% for i in man.interests %}<span class="interest-tag">{{ i }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-card-header">
+      <span>📋 Date Summary Card</span>
+      <span class="summary-id">#{{ match.id }}</span>
+    </div>
+    <div class="summary-details">
+      <div class="detail-row"><span class="detail-label">📍 Venue</span><span>{{ match.venue }}</span></div>
+      <div class="detail-row"><span class="detail-label">🌹 Plan</span><span>{{ match.date_idea }}</span></div>
+      <div class="detail-row"><span class="detail-label">💵 Budget</span><span>${{ match.budget }}</span></div>
+      <div class="detail-row"><span class="detail-label">📅 Matched</span><span>{{ match.matched_at }}</span></div>
+    </div>
+    <div class="stripe-status stripe-status--soon">🔒 Stripe escrow coming soon — funds held until date confirmed</div>
+  </div>
+
+  <div class="match-actions">
+    <a href="/man" class="btn btn-outline">Browse more →</a>
+    <a href="/woman" class="btn btn-outline">Post another →</a>
+  </div>
+</div>
+{% endblock %}

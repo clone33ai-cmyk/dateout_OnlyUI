@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard — DateOut{% endblock %}
+{% block content %}
+
+<div class="profile-hero">
+  <div class="profile-photos-strip">
+    {% for photo in user.photos %}
+    <img src="{{ photo }}" class="profile-strip-photo {% if loop.first %}profile-strip-photo--main{% endif %}" alt="{{ user.name }}"/>
+    {% endfor %}
+  </div>
+  <div class="profile-hero-info">
+    <h1 class="profile-name">{{ user.name }}, {{ user.age }}</h1>
+    <p class="profile-bio">{{ user.bio }}</p>
+    <span class="profile-joined muted">Member since {{ user.joined }}</span>
+  </div>
+</div>
+
+<div class="two-col" style="margin-top:2rem">
+
+  <div class="form-card">
+    <h2>Post a new date 🌹</h2>
+    <form action="/woman/post" method="post" class="form">
+      <div class="field">
+        <label>Venue / place</label>
+        <input type="text" name="venue" placeholder="Nobu Dallas, Deep Ellum, Klyde Warren Park…" required/>
+      </div>
+      <div class="field">
+        <label>Date idea</label>
+        <textarea name="date_idea" placeholder="Dinner at sunset then a walk along the river…" rows="2" required></textarea>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Min budget ($)</label>
+          <input type="number" name="budget_min" placeholder="80" min="20" required/>
+        </div>
+        <div class="field">
+          <label>Max budget ($)</label>
+          <input type="number" name="budget_max" placeholder="200" min="20" required/>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">Publish date →</button>
+    </form>
+  </div>
+
+  <div>
+    <h2 class="section-title">Your posts</h2>
+    {% if not posts %}
+    <div class="empty-state empty-state--sm">
+      <p>No posts yet. Publish your first date wish-list!</p>
+    </div>
+    {% endif %}
+    {% for post in posts %}
+    <a href="/woman/post/{{ post.id }}" class="mini-card {% if post.funded_by %}mini-card--matched{% endif %}">
+      <div class="mini-card-top">
+        <div>
+          <strong>{{ post.venue }}</strong>
+          <span class="mini-venue">{{ post.date_idea[:50] }}{% if post.date_idea|length > 50 %}…{% endif %}</span>
+        </div>
+        <span class="budget-badge" style="margin-left:auto">${{ post.budget_min }}–${{ post.budget_max }}</span>
+      </div>
+      <div class="mini-status">
+        {% if post.funded_by %}✅ Matched with {{ post.funded_by }}{% else %}⏳ Waiting for a match…{% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

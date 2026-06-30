@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Create Your Profile — DateOut{% endblock %}
+{% block content %}
+<div class="auth-page auth-page--wide">
+  <a href="/register" class="back-link">← Back</a>
+  <div class="auth-header">
+    <div class="auth-role-badge auth-role-badge--woman">👩 Woman's Profile</div>
+    <h1 class="auth-title">Create your profile</h1>
+    <p class="auth-sub">Your profile is what men see before they decide to fund your date.</p>
+  </div>
+
+  {% if error %}
+  <div class="alert alert-error">⚠️ {{ error }}</div>
+  {% endif %}
+
+  <form action="/register/woman" method="post" enctype="multipart/form-data" class="form reg-form">
+
+    <div class="form-section">
+      <h3 class="form-section-title">Your photos</h3>
+      <p class="form-section-hint">At least 1 required. Your first photo is your main profile photo.</p>
+      <div class="photo-upload-area" id="uploadArea" onclick="document.getElementById('photos').click()">
+        <div class="photo-upload-placeholder" id="photoPlaceholder">
+          <span class="upload-icon">📸</span>
+          <p>Click to upload photos</p>
+          <small>JPG, PNG or WEBP · At least 1 required</small>
+        </div>
+        <div class="photo-previews" id="photoPreviews"></div>
+      </div>
+      <input type="file" name="photos" id="photos" accept="image/*" multiple required style="display:none">
+    </div>
+
+    <div class="form-section">
+      <h3 class="form-section-title">About you</h3>
+      <div class="form-row-3">
+        <div class="field field--span2">
+          <label>Full name</label>
+          <input type="text" name="name" placeholder="Sofia" required/>
+        </div>
+        <div class="field">
+          <label>Age</label>
+          <input type="number" name="age" placeholder="26" min="18" max="65" required/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="sofia@email.com" required/>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Min. 8 characters" minlength="8" required/>
+      </div>
+      <div class="field">
+        <label>Bio <span class="label-hint">— shown to men when they browse your post</span></label>
+        <textarea name="bio" placeholder="Tell potential dates a bit about you — your vibe, what you love, what makes you you…" rows="3" required></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full btn-lg">Create my profile →</button>
+    <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+  </form>
+</div>
+
+<script>
+document.getElementById('photos').addEventListener('change', function(e) {
+  const previews = document.getElementById('photoPreviews');
+  const placeholder = document.getElementById('photoPlaceholder');
+  const area = document.getElementById('uploadArea');
+  previews.innerHTML = '';
+  const files = Array.from(e.target.files);
+  if (files.length > 0) {
+    placeholder.style.display = 'none';
+    area.classList.add('has-photos');
+  } else {
+    placeholder.style.display = '';
+    area.classList.remove('has-photos');
+  }
+  files.forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'photo-preview-wrap' + (i === 0 ? ' photo-preview-wrap--main' : '');
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.className = 'photo-preview-img';
+      if (i === 0) {
+        const badge = document.createElement('span');
+        badge.className = 'photo-main-badge';
+        badge.textContent = 'Main';
+        wrap.appendChild(badge);
+      }
+      wrap.appendChild(img);
+      previews.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+</script>
+{% endblock %}

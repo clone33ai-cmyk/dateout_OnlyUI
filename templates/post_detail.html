@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Your Date Post — DateOut{% endblock %}
+{% block content %}
+<div class="page-header">
+  <a href="/woman" class="back-link">← My dashboard</a>
+  <h1>Your wish-list ✨</h1>
+</div>
+
+<div class="two-col">
+  <div class="wish-card">
+    <div class="wish-card-header">
+      {% if post.photos %}
+      <img src="{{ post.photos[0] }}" class="wish-avatar-photo" alt="{{ post.name }}"/>
+      {% endif %}
+      <div>
+        <h2>{{ post.name }}, {{ post.age }}</h2>
+        <span class="post-id-badge">#{{ post.id }}</span>
+      </div>
+    </div>
+    <div class="wish-details" style="margin-top:1rem">
+      <div class="detail-row"><span class="detail-label">📍 Venue</span><span>{{ post.venue }}</span></div>
+      <div class="detail-row"><span class="detail-label">🌹 Plan</span><span>{{ post.date_idea }}</span></div>
+      <div class="detail-row"><span class="detail-label">💵 Budget</span><span>${{ post.budget_min }}–${{ post.budget_max }}</span></div>
+      <div class="detail-row"><span class="detail-label">📅 Posted</span><span>{{ post.created_at }}</span></div>
+    </div>
+
+    {% if post.funded_by %}
+    <div class="match-banner">🎉 <strong>{{ post.funded_by }}</strong> wants to fund this date!</div>
+    {% else %}
+    <div class="waiting-banner">⏳ Waiting for someone to fund this date…</div>
+    {% endif %}
+  </div>
+
+  {% if man_profile %}
+  <div>
+    <h3 class="section-title" style="margin-bottom:1rem">He wants to take you out 👀</h3>
+    {% if man_profile.photos %}
+    <div class="profile-photo-gallery">
+      {% for photo in man_profile.photos %}
+      <img src="{{ photo }}" class="gallery-photo {% if loop.first %}gallery-photo--main{% endif %}" alt="{{ man_profile.name }}"/>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="form-card" style="border-radius:0 0 var(--r-lg) var(--r-lg)">
+      <p class="profile-name" style="font-size:18px;margin-bottom:.25rem">{{ man_profile.name }}, {{ man_profile.age }}</p>
+      <p class="wish-bio">{{ man_profile.bio }}</p>
+      {% if man_profile.interests %}
+      <div class="interest-display" style="margin-top:.875rem">
+        {% for i in man_profile.interests %}<span class="interest-tag">{{ i }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      {% if match %}
+      <a href="/match/{{ match.id }}" class="btn btn-primary btn-full" style="margin-top:1.25rem">See date summary card →</a>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">⏳</div>
+    <p>When a man funds your date, his full profile will appear here so you can decide.</p>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

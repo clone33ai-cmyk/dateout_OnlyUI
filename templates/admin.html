@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Admin — DateOut{% endblock %}
+{% block content %}
+<div class="page-header"><h1>Admin Dashboard 🛠️</h1></div>
+<div class="admin-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+  <div>
+    <h2>Users ({{ users|length }})</h2>
+    {% for u in users %}
+    <div class="mini-card">
+      <div class="mini-card-top">
+        {% if u.photos %}<img src="{{ u.photos[0] }}" style="width:36px;height:36px;border-radius:50%;object-fit:cover" alt=""/>{% endif %}
+        <div>
+          <strong>{{ u.name }}</strong>, {{ u.age }}
+          <span class="mini-venue">{{ u.role }} · {{ u.email }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div>
+    <h2>Posts ({{ posts|length }})</h2>
+    <table class="admin-table">
+      <thead><tr><th>ID</th><th>Woman</th><th>Venue</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for p in posts %}
+        <tr>
+          <td><a href="/woman/post/{{ p.id }}">#{{ p.id }}</a></td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.venue }}</td>
+          <td>{% if p.funded_by %}<span class="badge badge-green">Matched</span>{% else %}<span class="badge badge-yellow">Open</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <h2>Matches ({{ matches|length }})</h2>
+    {% for m in matches %}
+    <a href="/match/{{ m.id }}" class="mini-card">
+      <strong>#{{ m.id }}</strong>
+      <div class="mini-status">${{ m.budget }} · {{ m.matched_at }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

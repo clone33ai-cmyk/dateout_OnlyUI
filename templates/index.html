@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}DateOut — Women Curate. Men Fund. Both Show Up.{% endblock %}
+{% block content %}
+<div class="hero">
+  <div class="hero-badge">✨ Demo v0.1</div>
+  <h1 class="hero-title">Women Curate.<br/>Men Fund.<br/>Both Show Up.</h1>
+  <p class="hero-sub">DateOut flips dating. Women post a dream date. Men fund it to match. Profiles, photos, real intent.</p>
+
+  {% if user %}
+    <div class="hero-ctas">
+      {% if user.role == "woman" %}
+        <a href="/woman" class="btn btn-primary btn-lg">Go to my dashboard →</a>
+      {% else %}
+        <a href="/man" class="btn btn-primary btn-lg">Browse dates →</a>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="hero-ctas">
+      <a href="/register" class="btn btn-primary btn-lg">Create your profile →</a>
+      <a href="/login" class="btn btn-outline btn-lg">Log in</a>
+    </div>
+  {% endif %}
+
+  <div class="role-cards">
+    <div class="role-card role-woman">
+      <div class="role-icon">👩</div>
+      <div class="role-label">I'm a Woman</div>
+      <div class="role-desc">Build your profile, upload photos, and post your dream date. The right man will fund it.</div>
+    </div>
+    <div class="role-card role-man">
+      <div class="role-icon">👨</div>
+      <div class="role-label">I'm a Man</div>
+      <div class="role-desc">Create your profile, show your interests, and browse real date wish-lists from real women.</div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span><div class="step-text"><strong>Build your profile</strong> with photos so both sides know who they're meeting.</div></div>
+      <div class="step-arrow">→</div>
+      <div class="step"><span class="step-num">2</span><div class="step-text"><strong>She posts</strong> a wish-list date. <strong>He funds</strong> it — she sees his full profile before saying yes.</div></div>
+      <div class="step-arrow">→</div>
+      <div class="step"><span class="step-num">3</span><div class="step-text"><strong>They match</strong>, plan together, and the card activates at the venue.</div></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

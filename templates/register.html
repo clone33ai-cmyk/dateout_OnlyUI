@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Join DateOut{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <a href="/" class="back-link">← Back</a>
+  <div class="auth-header">
+    <h1 class="auth-title">Join DateOut</h1>
+    <p class="auth-sub">First, tell us who you are.</p>
+  </div>
+
+  <div class="role-cards role-cards--pick">
+    <a href="/register/woman" class="role-card role-woman">
+      <div class="role-icon">👩</div>
+      <div class="role-label">I'm a Woman</div>
+      <div class="role-desc">Post date wish-lists and choose who gets to take you out.</div>
+      <span class="role-btn">Create woman profile →</span>
+    </a>
+    <a href="/register/man" class="role-card role-man">
+      <div class="role-icon">👨</div>
+      <div class="role-label">I'm a Man</div>
+      <div class="role-desc">Browse dates, show your interests, and fund the one you want.</div>
+      <span class="role-btn">Create man profile →</span>
+    </a>
+  </div>
+
+  <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}DateOut{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo">💘 DateOut</a>
+    <div class="nav-links">
+      {% if user %}
+        {% if user.photos %}
+          <img src="{{ user.photos[0] }}" class="nav-avatar" alt="{{ user.name }}"/>
+        {% endif %}
+        <span class="nav-username">{{ user.name }}</span>
+        {% if user.role == "woman" %}
+          <a href="/woman">My Dashboard</a>
+        {% else %}
+          <a href="/man">Browse</a>
+        {% endif %}
+        <a href="/logout" class="nav-logout">Log out</a>
+      {% else %}
+        <a href="/login" class="nav-link-subtle">Log in</a>
+        <a href="/register" class="btn btn-primary btn-sm">Sign up</a>
+      {% endif %}
+      <a href="/admin" class="nav-admin">Admin</a>
+    </div>
+  </nav>
+
+  <main class="main">{% block content %}{% endblock %}</main>
+
+  <footer class="footer">DateOut Demo &mdash; Test Mode Only</footer>
+</body>
+</html>

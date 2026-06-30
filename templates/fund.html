@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Fund {{ post.name }}'s Date — DateOut{% endblock %}
+{% block content %}
+<div class="page-header">
+  <a href="/man" class="back-link">← Back to feed</a>
+  <h1>Fund this date 💳</h1>
+  <p>She'll see your full profile before confirming the match.</p>
+</div>
+
+<div class="two-col">
+  <div>
+    <h3 class="section-title" style="margin-bottom:1rem">Her profile</h3>
+    {% if woman_profile and woman_profile.photos %}
+    <div class="profile-photo-gallery">
+      {% for photo in woman_profile.photos %}
+      <img src="{{ photo }}" class="gallery-photo {% if loop.first %}gallery-photo--main{% endif %}" alt="{{ post.name }}"/>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="wish-card" style="margin-top:1rem;border-radius:0 0 var(--r-lg) var(--r-lg)">
+      <h2>{{ post.name }}, {{ post.age }}</h2>
+      <p class="wish-bio">{{ post.bio }}</p>
+      <div class="wish-details">
+        <div class="detail-row"><span class="detail-label">📍 Venue</span><span>{{ post.venue }}</span></div>
+        <div class="detail-row"><span class="detail-label">🌹 Plan</span><span>{{ post.date_idea }}</span></div>
+        <div class="detail-row"><span class="detail-label">💵 Budget range</span><span>${{ post.budget_min }} – ${{ post.budget_max }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="section-title" style="margin-bottom:1rem">Your profile (she will see this)</h3>
+    {% if user.photos %}
+    <div class="profile-photo-gallery">
+      <img src="{{ user.photos[0] }}" class="gallery-photo gallery-photo--main" alt="{{ user.name }}"/>
+    </div>
+    {% endif %}
+    <div class="form-card" style="border-radius:0 0 var(--r-lg) var(--r-lg)">
+      <p class="profile-name" style="font-size:18px;margin-bottom:.25rem">{{ user.name }}, {{ user.age }}</p>
+      <p class="wish-bio">{{ user.bio }}</p>
+      {% if user.interests %}
+      <div class="interest-display" style="margin-top:.75rem">
+        {% for i in user.interests %}<span class="interest-tag">{{ i }}</span>{% endfor %}
+      </div>
+      {% endif %}
+
+      <hr class="divider"/>
+
+      <form action="/man/fund/{{ post.id }}" method="post" class="form">
+        <div class="field">
+          <label>Your budget ($)</label>
+          <input type="number" name="budget"
+                 placeholder="{{ post.budget_min }}"
+                 min="{{ post.budget_min }}" max="{{ post.budget_max }}" required/>
+          <span class="field-hint">Between ${{ post.budget_min }} and ${{ post.budget_max }}. Card held — not charged yet. (Stripe coming soon)</span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Fund &amp; send match request →</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

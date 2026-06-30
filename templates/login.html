@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Log In — DateOut{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <a href="/" class="back-link">← Back</a>
+  <div class="auth-header">
+    <h1 class="auth-title">Welcome back</h1>
+    <p class="auth-sub">Log in to your DateOut profile.</p>
+  </div>
+
+  {% if error %}
+  <div class="alert alert-error">⚠️ {{ error }}</div>
+  {% endif %}
+
+  <form action="/login" method="post" class="form">
+    <div class="field">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="your@email.com" required/>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Your password" required/>
+    </div>
+    <button type="submit" class="btn btn-primary btn-full btn-lg">Log in →</button>
+  </form>
+
+  <p class="auth-switch">Don't have an account? <a href="/register">Sign up</a></p>
+</div>
+{% endblock %}
